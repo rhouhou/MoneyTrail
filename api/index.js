@@ -6,6 +6,7 @@ import saleRoutes from "./routes/sale.routes.js";
 import expenseRoutes from "./routes/expense.routes.js";
 import accountingRoutes from "./routes/accounting.routes.js";
 import path from 'path';
+import cors from "cors";
 
 dotenv.config();
 
@@ -15,6 +16,14 @@ if (!process.env.MONGO) {
 
 const app = express();
 app.use(express.json());
+
+if (process.env.NODE_ENV !== "production") {
+  app.use(
+    cors({
+      origin: "http://localhost:5173",
+    })
+  );
+}
 
 mongoose
   .connect(process.env.MONGO)
