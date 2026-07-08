@@ -30,7 +30,6 @@ const Sales = () => {
   const [error, setError] = useState("");
   const [newSales, setNewSales] = useState([]);
   const [products, setProducts] = useState([]);
-  const [deleteTarget, setDeleteTarget] = useState(null);
   const [showValidationError, setShowValidationError] = useState(false);
   const [productNames, setProductNames] = useState([]);
   const [withBottles, setWithBottles] = useState(["yes", "no"]);
@@ -90,13 +89,6 @@ const Sales = () => {
       sale.isWithBottle !== null &&
       sale.quantity
     );
-  };
-
-  const confirmDelete = (idOrIndex, isNewSale) => {
-    console.log(
-      `Confirm delete: ID or Index: ${idOrIndex}, isNew: ${isNewSale}`
-    );
-    setDeleteTarget({ idOrIndex, isNewSale });
   };
 
   // Filters

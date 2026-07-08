@@ -27,8 +27,7 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [newProducts, setNewProducts] = useState([]); 
-  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [newProducts, setNewProducts] = useState([]);
   const [showValidationError, setShowValidationError] = useState(false);
   const [categories, setCategories] = useState([
     "Handwash",
@@ -103,13 +102,6 @@ const ProductList = () => {
     parseFloat(product.sellPriceLLwithBottle) > 0 &&
     parseFloat(product.sellPriceLLwithoutBottle) > 0
     );
-  };
-
-  const confirmDelete = (idOrIndex, isNewProduct) => {
-    console.log(
-      `Confirm delete: ID or Index: ${idOrIndex}, isNew: ${isNewProduct}`
-    );
-    setDeleteTarget({ idOrIndex, isNewProduct });
   };
 
   const [filters, setFilters] = useState({
@@ -459,7 +451,6 @@ const ProductList = () => {
           onDelete={(idOrIndex, isNewProduct) => {
             if (idOrIndex !== undefined && idOrIndex !== null) {
               handleDelete(idOrIndex, isNewProduct, "products", setProducts, setError);
-              setDeleteTarget(null)
             } else {
               console.error("Delete target is not properly set:", idOrIndex);
             }

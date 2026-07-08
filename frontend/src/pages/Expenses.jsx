@@ -23,7 +23,6 @@ const Expenses = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [newExpenses, setNewExpenses] = useState([]); // Array to store multiple new expenses
-  const [deleteTarget, setDeleteTarget] = useState(null);
   const [showValidationError, setShowValidationError] = useState(false);
   const [categories, setCategories] = useState(["Purchases & Supplies", 
         "Travel & Transportation", 
@@ -78,13 +77,6 @@ const Expenses = () => {
       expense.exchangeRate &&
       expense.paidInUSD
     );
-  };
-
-  const confirmDelete = (idOrIndex, isNewExpense) => {
-    console.log(
-      `Confirm delete: ID or Index: ${idOrIndex}, isNew: ${isNewExpense}`
-    );
-    setDeleteTarget({ idOrIndex, isNewExpense });
   };
 
   const [filters, setFilters] = useState({
@@ -352,7 +344,6 @@ const Expenses = () => {
           onDelete={(idOrIndex, isNewExpense) => {
             if (idOrIndex !== undefined && idOrIndex !== null) {
               handleDelete(idOrIndex, isNewExpense, "expenses", setExpenses, setError);
-              setDeleteTarget(null)
             } else {
               console.error("Delete target is not properly set:", idOrIndex);
             }
