@@ -422,6 +422,13 @@ const Sales = () => {
             {error}
           </p>
         )}
+
+        {!loading && !error && paginatedSales.length === 0 && (
+          <p style={{ color: "#666", marginBottom: "10px" }}>
+            No sales found.
+          </p>
+        )}
+
         <ItemsTable
           columns={salesColumns}
           items={paginatedSales}

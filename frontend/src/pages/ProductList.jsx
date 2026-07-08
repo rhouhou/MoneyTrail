@@ -442,7 +442,13 @@ const ProductList = () => {
             <p style={{ color: "red", marginBottom: "10px" }}>
               {error}
             </p>
-    )}
+          )}
+
+          {!loading && !error && paginatedProducts.length === 0 && (
+            <p style={{ color: "#666", marginBottom: "10px" }}>
+              No products found.
+            </p>
+          )}
 
           <ItemsTable
           columns={productsColumns}

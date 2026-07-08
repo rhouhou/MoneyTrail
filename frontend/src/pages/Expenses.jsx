@@ -337,6 +337,13 @@ const Expenses = () => {
               {error}
             </p>
           )}
+
+          {!loading && !error && paginatedExpenses.length === 0 && (
+            <p style={{ color: "#666", marginBottom: "10px" }}>
+              No expenses found.
+            </p>
+          )}
+
           <ItemsTable 
           columns={expensesColumns}
           items={paginatedExpenses}
