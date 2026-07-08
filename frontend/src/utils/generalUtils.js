@@ -1,7 +1,12 @@
-export const fetchItems = async (endpoint) => {
-  const response = await fetch(endpoint);
-  if (!response.ok) throw new Error("Failed to fetch data");
-  return response.json();
+export const fetchItems = async (apiEndpoint) => {
+  const response = await fetch(apiEndpoint);
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || `Failed to fetch data from ${apiEndpoint}`);
+  }
+
+  return data;
 };
 
 export const saveEdit = async ({

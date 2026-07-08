@@ -237,6 +237,8 @@ const ProductList = () => {
   };
 
   const handleAddAndSaveProduct = async () => {
+    setError("");
+
     const {
       category,
       scent,
@@ -273,7 +275,8 @@ const ProductList = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save the product to the backend");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to save the product to the backend");
       }
 
       const savedProduct = await response.json();
@@ -305,8 +308,9 @@ const ProductList = () => {
       setSuccessMessage("Product added and saved successfully!");
       console.log("Success message:", successMessage);
       setTimeout(() => setSuccessMessage(""), 3000);
-    } catch (error) {
-      console.error("Error saving product:", error);
+    } catch (err) {
+      console.error("Error saving product:", err.message);
+      setError(err.message || "Something went wrong while saving the product.");
     }
   };
 
