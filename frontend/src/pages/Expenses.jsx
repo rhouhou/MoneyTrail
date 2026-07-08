@@ -20,7 +20,8 @@ const Expenses = () => {
   });
   const [newExpense, setNewExpense] = useState(initialExpense());
   const [expenses, setExpenses] = useState([]);
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [newExpenses, setNewExpenses] = useState([]); // Array to store multiple new expenses
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [showValidationError, setShowValidationError] = useState(false);
@@ -38,29 +39,30 @@ const Expenses = () => {
   const [originalItems, setOriginalItems] = useState({});
   
   useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
+    try {
       setLoading(true);
-      try {
-        const expensesData = await fetchItems("/api/expenses");
+      setError("");
 
-        // Verify the format of the fetched data
-        console.log("Fetched Expenses Data:", expensesData);
+      const expensesData = await fetchItems("/api/expenses");
+      console.log("Fetched Expenses Data:", expensesData);
 
-        // Assuming expensesData is an array of expense objects
-        setExpenses(
-          expensesData.map((expense) => ({
-            ...expense,
-            isEditing: false,
-          }))
-        );
-      } catch (error) {
-        console.error("Error fetching expenses data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+      setExpenses(
+        expensesData.map((expense) => ({
+          ...expense,
+          isEditing: false,
+        }))
+      );
+    } catch (err) {
+      console.error("Error fetching expenses data:", err);
+      setError(err.message || "Something went wrong while loading expenses.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, []);
 
   const toggleFormVisibility = () => {
     setIsFormVisible((prev) => !prev);
@@ -207,7 +209,8 @@ const Expenses = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save the expense to the backend");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to save the expense to the backend");
       }
 
       const savedExpense = await response.json();
@@ -235,8 +238,9 @@ const Expenses = () => {
       setSuccessMessage("Expense added and saved successfully!");
       console.log("Success message:", successMessage);
       setTimeout(() => setSuccessMessage(""), 3000);
-    } catch (error) {
-      console.error("Error saving expense:", error.message);
+    } catch (err) {
+      console.error("Error saving expense:", err.message);
+      setError(err.message || "Something went wrong while saving the expense.");
     }
   };
 
@@ -329,6 +333,17 @@ const Expenses = () => {
 
         {/* Table to display expenses */}
         <div className="table-panel">
+          {loading && (
+            <p style={{ color: "#666", marginBottom: "10px" }}>
+              Loading expenses...
+            </p>
+          )}
+
+          {error && (
+            <p style={{ color: "red", marginBottom: "10px" }}>
+              {error}
+            </p>
+          )}
           <ItemsTable 
           columns={expensesColumns}
           items={paginatedExpenses}

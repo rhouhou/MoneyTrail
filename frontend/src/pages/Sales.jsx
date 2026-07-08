@@ -27,6 +27,7 @@ const Sales = () => {
   const [newSale, setNewSale] = useState(initialSale());
   const [sales, setSales] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [newSales, setNewSales] = useState([]);
   const [products, setProducts] = useState([]);
   const [deleteTarget, setDeleteTarget] = useState(null);
@@ -44,36 +45,38 @@ const Sales = () => {
 
   // Fetch products and sales
   useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
+    try {
       setLoading(true);
-      try {
-        const [productData, salesData] = await Promise.all([
-          fetchItems("/api/products"),
-          fetchItems("/api/sales"),
-        ]);
+      setError("");
 
-        // Verify the format of the fetched data
-        console.log("Fetched Product Data:", productData);
-        console.log("Fetched Sales Data:", salesData);
+      const [productData, salesData] = await Promise.all([
+        fetchItems("/api/products"),
+        fetchItems("/api/sales"),
+      ]);
 
-        // Assuming productData is an array of product objects with a productname property
-        setProductNames(productData.map((product) => product.productname));
-        setProducts(productData);
-        setSales(
-          salesData.map((sale) => ({
-            ...sale,
+      console.log("Fetched Product Data:", productData);
+      console.log("Fetched Sales Data:", salesData);
 
-            isEditing: false,
-          }))
-        );
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+      setProductNames(productData.map((product) => product.productname));
+      setProducts(productData);
+
+      setSales(
+        salesData.map((sale) => ({
+          ...sale,
+          isEditing: false,
+        }))
+      );
+    } catch (err) {
+      console.error("Error fetching sales data:", err);
+      setError(err.message || "Something went wrong while loading sales.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, []);
 
   const toggleFormVisibility = () => {
     setIsFormVisible((prev) => !prev);
@@ -152,8 +155,7 @@ const Sales = () => {
 
         if (selectedProduct) {
           updatedSale.unitprice =
-            updatedSale.isWithBottle === "yes" ||
-            updatedSale.isWithBottle === "no"
+            updatedSale.isWithBottle === "yes"
               ? selectedProduct.sellPriceLLwithBottle
               : selectedProduct.sellPriceLLwithoutBottle;
 
@@ -273,7 +275,7 @@ const Sales = () => {
 
     // Calculate unitprice based on isWithBottle
     const unitprice =
-      isWithBottle === "yes" || isWithBottle === "no"
+      isWithBottle === "yes"
         ? selectedProduct.sellPriceLLwithBottle
         : selectedProduct.sellPriceLLwithoutBottle;
 
@@ -300,7 +302,8 @@ const Sales = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save the sale to the backend");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to save the sale to the backend");
       }
 
       const savedSale = await response.json();
@@ -328,8 +331,9 @@ const Sales = () => {
       setSuccessMessage("Sale added and saved successfully!");
       console.log("Success message:", successMessage);
       setTimeout(() => setSuccessMessage(""), 3000);
-    } catch (error) {
-      console.error("Error saving sale:", error.message);
+    } catch (err) {
+      console.error("Error saving sale:", err.message);
+      setError(err.message || "Something went wrong while saving the sale.");
     }
   };
 
@@ -414,6 +418,17 @@ const Sales = () => {
 
       {/* Table Section */}
       <div className="table-panel">
+        {loading && (
+          <p style={{ color: "#666", marginBottom: "10px" }}>
+            Loading sales...
+          </p>
+        )}
+
+        {error && (
+          <p style={{ color: "red", marginBottom: "10px" }}>
+            {error}
+          </p>
+        )}
         <ItemsTable
           columns={salesColumns}
           items={paginatedSales}

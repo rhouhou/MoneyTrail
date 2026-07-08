@@ -25,7 +25,8 @@ const ProductList = () => {
 
   const [newProduct, setNewProduct] = useState(initialProduct()); 
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [newProducts, setNewProducts] = useState([]); 
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [showValidationError, setShowValidationError] = useState(false);
@@ -61,26 +62,30 @@ const ProductList = () => {
   const [originalItems, setOriginalItems] = useState({});
  
   useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
+    try {
       setLoading(true);
-      try {
-        const productData = await fetchItems("/api/products");
-        console.log("Fetched Products Data:", productData);
+      setError("");
 
-        setProducts(
-          productData.map((product) => ({
-            ...product,
-            isEditing: false,
-          }))
-        );
-      } catch (err) {
-        console.error("Error fetching products data:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+      const productData = await fetchItems("/api/products");
+      console.log("Fetched Products Data:", productData);
+
+      setProducts(
+        productData.map((product) => ({
+          ...product,
+          isEditing: false,
+        }))
+      );
+    } catch (err) {
+      console.error("Error fetching products data:", err);
+      setError(err.message || "Something went wrong while loading products.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, []);
 
   const toggleFormVisibility = () => {
     setIsFormVisible((prev) => !prev);
@@ -431,8 +436,18 @@ const ProductList = () => {
 
         {/* Table Section */}
         <div className="table-panel">
+          {loading && (
+            <p style={{ color: "#666", marginBottom: "10px" }}>
+              Loading products...
+            </p>
+          )}
+          {error && (
+            <p style={{ color: "red", marginBottom: "10px" }}>
+              {error}
+            </p>
+    )}
 
-        <ItemsTable 
+          <ItemsTable
           columns={productsColumns}
           items={paginatedProducts}
           onEdit={handleEditChange}
