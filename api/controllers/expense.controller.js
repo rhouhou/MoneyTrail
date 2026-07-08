@@ -1,35 +1,39 @@
 import Expense from "../models/expense.model.js";
 import { errorHandler } from "../utils/error.js";
+import { isValidObjectId } from "../utils/validateObjectId.js";
 
-export const createExpense = async (req, res) => {
+export const createExpense = async (req, res, next) => {
   try {
     const expense = new Expense(req.body);
     const savedExpense = await expense.save();
+
     res.status(201).json(savedExpense);
   } catch (error) {
-    console.error("Error saving expense:", error);
-    res.status(500).json({ error: "Failed to save expense" });
+    next(error);
   }
 };
 
 export const deleteExpense = async (req, res, next) => {
-  const existingExpense = await Expense.findById(req.params.id);
+  if (!isValidObjectId(req.params.id)) {
+    return next(errorHandler(400, "Invalid expense ID format"));
+  }
 
-  if (!existingExpense) return next(errorHandler(404, "Expense not found"));
+  try{
+     const existingExpense = await Expense.findById(req.params.id);
+     if (!existingExpense) return next(errorHandler(404, "Expense not found"));
 
-  try {
-    await Expense.findByIdAndDelete(req.params.id);
-    return res.status(200).json("Expense has been deleted!");
+     await Expense.findByIdAndDelete(req.params.id);
+
+     return res.status(200).json("Expense has been deleted!");
   } catch (error) {
     next(error);
   }
 };
 
 export const updateExpense = async (req, res, next) => {
-  const expense = await Expense.findById(req.params.id);
-
-  if (!expense) return next(errorHandler(404, "Expense not found"));
-
+  if (!isValidObjectId(req.params.id)) {
+    return next(errorHandler(400, "Invalid expense ID format"));
+  }
   try {
     const updatedExpense = await Expense.findByIdAndUpdate(
       req.params.id,
@@ -38,17 +42,22 @@ export const updateExpense = async (req, res, next) => {
         runValidators: true,
        }
     );
+
+    if (!updatedExpense) {
+      return next(errorHandler(404, "Expense not found"));
+    }
+    
     return res.status(200).json(updatedExpense);
   } catch (error) {
     next(error);
   }
 };
 
-export const getExpenses = async (req, res) => {
+export const getExpenses = async (req, res, next) => {
   try {
     const expenses = await Expense.find();
-    res.json(expenses);
+    return res.status(200).json(expenses);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
