@@ -187,17 +187,25 @@ frontend/dist
 
 ## Screenshots
 
-Screenshots can be added here to show the main workflow of the application.
+### Home
 
-Suggested screenshots:
+![Home page](docs/screenshots/home.png)
 
-```text
-docs/screenshots/home.png
-docs/screenshots/products.png
-docs/screenshots/sales.png
-docs/screenshots/expenses.png
-docs/screenshots/accounting.png
-```
+### Products
+
+![Products page](docs/screenshots/products.png)
+
+### Sales
+
+![Sales page](docs/screenshots/sales.png)
+
+### Expenses
+
+![Expenses page](docs/screenshots/expenses.png)
+
+### Accounting
+
+![Accounting page](docs/screenshots/accounting.png)
 
 ## Current Status
 
