@@ -428,6 +428,12 @@ const Sales = () => {
           onEdit={handleEditChange}
           onDelete={(idOrIndex, isNewSale) => {
             if (idOrIndex !== undefined && idOrIndex !== null) {
+              const shouldDelete = window.confirm(
+                "Are you sure you want to delete this sale?"
+              );
+
+              if (!shouldDelete) return;
+
               handleDelete(idOrIndex, isNewSale, "sales", setSales, setError);
             } else {
               console.error("Delete target is not properly set:", idOrIndex);
