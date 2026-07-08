@@ -15,7 +15,7 @@ export const createSale = async (req, res, next) => {
 
 export const getSales = async (req, res, next) => {
   try {
-    const sales = await Sale.find();
+    const sales = await Sale.find().sort({ createdAt: -1 });
 
     return res.status(200).json(sales);
   } catch (error) {

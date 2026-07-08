@@ -55,7 +55,7 @@ export const updateExpense = async (req, res, next) => {
 
 export const getExpenses = async (req, res, next) => {
   try {
-    const expenses = await Expense.find();
+    const expenses = await Expense.find().sort({ createdAt: -1 });
     return res.status(200).json(expenses);
   } catch (error) {
     next(error);
