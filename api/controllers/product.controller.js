@@ -15,7 +15,10 @@ export const createProduct = async (req, res, next) => {
 
 export const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 });
+    const products = await Product.find()
+    .sort({ createdAt: -1 })
+    .select("-__v")
+    .lean();
 
     return res.status(200).json(products);
   } catch (error) {
