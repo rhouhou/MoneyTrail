@@ -9,6 +9,10 @@ import path from 'path';
 
 dotenv.config();
 
+if (!process.env.MONGO) {
+  throw new Error("MONGO environment variable is missing");
+}
+
 const app = express();
 app.use(express.json());
 
