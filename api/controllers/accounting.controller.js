@@ -3,30 +3,45 @@ import Expense from "../models/expense.model.js";
 
 export const getAccountingSummary = async (req, res, next) => {
   try {
-    const sales = await Sale.find();
-    const expenses = await Expense.find();
+    const [salesSummary, expensesSummary] = await Promise.all([
+      Sale.aggregate([
+        {
+          $group: {
+            _id: null,
+            totalSales: { $sum: "$totalamount" },
+            numberOfSales: { $sum: 1 },
+          },
+        },
+      ]),
+      Expense.aggregate([
+        {
+          $group: {
+            _id: null,
+            totalExpensesUSD: { $sum: "$paidInUSD" },
+            totalExpensesLL: { $sum: "$paidInLL" },
+            numberOfExpenses: { $sum: 1 },
+          },
+        },
+      ]),
+    ]);
 
-    const totalSales = sales.reduce(
-      (sum, sale) => sum + Number(sale.totalamount || 0),
-      0
-    );
+    const sales = salesSummary[0] || {
+      totalSales: 0,
+      numberOfSales: 0,
+    };
 
-    const totalExpensesUSD = expenses.reduce(
-      (sum, expense) => sum + Number(expense.paidInUSD || 0),
-      0
-    );
-
-    const totalExpensesLL = expenses.reduce(
-      (sum, expense) => sum + Number(expense.paidInLL || 0),
-      0
-    );
+    const expenses = expensesSummary[0] || {
+      totalExpensesUSD: 0,
+      totalExpensesLL: 0,
+      numberOfExpenses: 0,
+    };
 
     return res.status(200).json({
-      totalSales,
-      totalExpensesUSD,
-      totalExpensesLL,
-      numberOfSales: sales.length,
-      numberOfExpenses: expenses.length,
+      totalSales: sales.totalSales,
+      totalExpensesUSD: expenses.totalExpensesUSD,
+      totalExpensesLL: expenses.totalExpensesLL,
+      numberOfSales: sales.numberOfSales,
+      numberOfExpenses: expenses.numberOfExpenses,
     });
   } catch (error) {
     next(error);
