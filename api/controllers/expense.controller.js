@@ -34,7 +34,9 @@ export const updateExpense = async (req, res, next) => {
     const updatedExpense = await Expense.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true }
+      { new: true,
+        runValidators: true,
+       }
     );
     return res.status(200).json(updatedExpense);
   } catch (error) {

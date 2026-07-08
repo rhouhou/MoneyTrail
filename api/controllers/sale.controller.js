@@ -35,6 +35,7 @@ export const updateSale = async (req, res, next) => {
   try {
     const updatedSale = await Sale.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
+      runValidators: true,
     });
     return res.status(200).json(updatedSale);
   } catch (error) {
