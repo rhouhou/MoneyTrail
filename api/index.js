@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import productRoutes from "./routes/product.routes.js";
 import saleRoutes from "./routes/sale.routes.js";
 import expenseRoutes from "./routes/expense.routes.js";
@@ -18,6 +19,18 @@ if (!process.env.MONGO) {
 const app = express();
 app.use(express.json());
 app.use(helmet());
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: {
+    success: false,
+    statusCode: 429,
+    message: "Too many requests. Please try again later.",
+  },
+});
+
+app.use("/api", apiLimiter);
 
 if (process.env.NODE_ENV !== "production") {
   app.use(
