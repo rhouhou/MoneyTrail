@@ -436,7 +436,7 @@ const Sales = () => {
           onEdit={handleEditChange}
           onDelete={(idOrIndex, isNewSale) => {
             if (idOrIndex !== undefined && idOrIndex !== null) {
-              handleDelete(idOrIndex, isNewSale, "sales", setSales);
+              handleDelete(idOrIndex, isNewSale, "sales", setSales, setError);
             } else {
               console.error("Delete target is not properly set:", idOrIndex);
             }

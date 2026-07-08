@@ -458,7 +458,7 @@ const ProductList = () => {
           onEdit={handleEditChange}
           onDelete={(idOrIndex, isNewProduct) => {
             if (idOrIndex !== undefined && idOrIndex !== null) {
-              handleDelete(idOrIndex, isNewProduct, "products", setProducts);
+              handleDelete(idOrIndex, isNewProduct, "products", setProducts, setError);
               setDeleteTarget(null)
             } else {
               console.error("Delete target is not properly set:", idOrIndex);

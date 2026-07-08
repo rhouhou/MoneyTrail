@@ -351,7 +351,7 @@ const Expenses = () => {
           onEdit={handleEditChange}
           onDelete={(idOrIndex, isNewExpense) => {
             if (idOrIndex !== undefined && idOrIndex !== null) {
-              handleDelete(idOrIndex, isNewExpense, "expenses", setExpenses);
+              handleDelete(idOrIndex, isNewExpense, "expenses", setExpenses, setError);
               setDeleteTarget(null)
             } else {
               console.error("Delete target is not properly set:", idOrIndex);

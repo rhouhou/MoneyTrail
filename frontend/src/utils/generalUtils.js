@@ -121,31 +121,41 @@ export const handleDelete = async (
   idOrIndex,
   isNewItem = false,
   type = "sales",
-  setItems
+  setItems,
+  setError
 ) => {
-  if (isNewItem) {
-    // Handle deletion of a new item (client-side only)
-    setItems((prevItems) => prevItems.filter((_, i) => i !== idOrIndex));
-  } else {
-    try {
-      if (!idOrIndex) {
-        console.error("Invalid ID provided for deletion:", idOrIndex);
-        return;
-      }
+  try {
+    if (setError) {
+      setError("");
+    }
 
-      const response = await fetch(`/api/${type}/${idOrIndex}`, {
-        method: "DELETE",
-      });
+    if (isNewItem) {
+      setItems((prevItems) => prevItems.filter((_, i) => i !== idOrIndex));
+      return;
+    }
 
-      if (!response.ok) {
-        throw new Error(`Failed to delete ${type} from the database`);
-      }
+    if (!idOrIndex) {
+      throw new Error(`Invalid ${type} ID provided for deletion.`);
+    }
 
-      setItems((prevItems) =>
-        prevItems.filter((item) => item._id !== idOrIndex)
-      );
-    } catch (error) {
-      console.error(`Error deleting ${type}:`, error);
+    const response = await fetch(`/api/${type}/${idOrIndex}`, {
+      method: "DELETE",
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || `Failed to delete ${type}.`);
+    }
+
+    setItems((prevItems) =>
+      prevItems.filter((item) => item._id !== idOrIndex)
+    );
+  } catch (err) {
+    console.error(`Error deleting ${type}:`, err);
+
+    if (setError) {
+      setError(err.message || `Something went wrong while deleting ${type}.`);
     }
   }
 };
