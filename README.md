@@ -227,7 +227,9 @@ frontend/dist
 
 MoneyTrail is a portfolio project demonstrating a MERN-style business management dashboard. The core product, sales, expense, and accounting summary features are implemented.
 
-The backend includes REST API routes for products, sales, expenses, and accounting summaries. It also includes validation for MongoDB IDs, schema validation for saved records, cleaner API error responses, a health check endpoint, API 404 handling, security headers, request size limits, and basic rate limiting.
+The backend includes REST API routes for products, sales, expenses, and accounting summaries. It also includes MongoDB ID validation, schema validation, clearer API error responses, a health check endpoint, API 404 handling, security headers, request size limits, and basic rate limiting.
+
+The frontend includes product, sales, and expense management pages with filtering, pagination, add/edit/delete actions, loading states, success messages, and basic error handling for failed fetch, save, edit, and delete actions.
 
 The project is deployed on Render and can also be run locally with a MongoDB connection string.
 
@@ -236,10 +238,10 @@ The project is deployed on Render and can also be run locally with a MongoDB con
 * Add user authentication and protected routes
 * Add role-based access for business/admin users
 * Add automated backend tests for API routes
-* Add frontend loading and error states
-* Add charts for sales, expenses, and profit trends
 * Improve accounting summaries with date filters
+* Add charts for sales, expenses, and profit trends
 * Add export options for accounting reports
+* Improve responsive design for smaller screens
 * Clean and standardize field names across models and frontend forms
 * Add demo screenshots and sample data
 
