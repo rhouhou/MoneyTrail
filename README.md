@@ -71,6 +71,14 @@ MoneyTrail/
 
 ## API Routes
 
+### Health Check
+
+```text
+GET /api/health
+```
+
+Returns a simple status message confirming that the API is running.
+
 ### Products
 
 ```text
@@ -97,6 +105,14 @@ POST   /api/expenses
 PUT    /api/expenses/:id
 DELETE /api/expenses/:id
 ```
+
+### Accounting
+
+```text
+GET /api/accounting/summary
+```
+
+Returns a basic accounting summary, including total sales, total expenses, number of sales, and number of expenses.
 
 ## Getting Started
 
