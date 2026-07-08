@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import helmet from "helmet";
 import productRoutes from "./routes/product.routes.js";
 import saleRoutes from "./routes/sale.routes.js";
 import expenseRoutes from "./routes/expense.routes.js";
@@ -16,6 +17,7 @@ if (!process.env.MONGO) {
 
 const app = express();
 app.use(express.json());
+app.use(helmet());
 
 if (process.env.NODE_ENV !== "production") {
   app.use(
