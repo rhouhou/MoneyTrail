@@ -214,6 +214,7 @@ const ProductList = () => {
       setNewItems: setNewProducts,
       apiEndpoint: "/api/products",
       setSuccessMessage,
+      setError,
     });
   };
 

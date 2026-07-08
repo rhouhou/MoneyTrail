@@ -152,6 +152,7 @@ const Expenses = () => {
       setNewItems: setNewExpenses,
       apiEndpoint: "/api/expenses",
       setSuccessMessage,
+      setError,
     });
   };
 

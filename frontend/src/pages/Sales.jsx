@@ -238,6 +238,7 @@ const Sales = () => {
       setNewItems: setNewSales,
       apiEndpoint: "/api/sales",
       setSuccessMessage,
+      setError,
     });
   };
 

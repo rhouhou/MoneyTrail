@@ -10,49 +10,82 @@ export const fetchItems = async (apiEndpoint) => {
 };
 
 export const saveEdit = async ({
-    item,
-    index,
-    isNew,
-    newItems,
-    setNewItems,
-    items,
-    setItems,
-    apiEndpoint,
-    setSuccessMessage,
-  }) => {
-    if (isNew) {
-      if (!newItems) {
-        console.error("newItems is undefined in saveEdit");
-        return;
-      }
-      const updatedNewItems = [...newItems];
-      updatedNewItems[index].isEditing = false;
-      setNewItems(updatedNewItems);
-    } else {
-      if (!items) {
-        console.error("items is undefined in saveEdit");
-        return;
-      }
-      try {
-        const response = await fetch(`${apiEndpoint}/${item._id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(item),
-        });
-        if (!response.ok) throw new Error("Failed to save changes");
-        const updatedItems = items.map((it) =>
-          it._id === item._id ? { ...item, isEditing: false } : it
-        );
-        setItems(updatedItems);
-        if (setSuccessMessage) {
-          setSuccessMessage("Changes saved successfully!");
-          setTimeout(() => setSuccessMessage(""), 3000);
-        }
-      } catch (error) {
-        console.error("Error saving item:", error);
-      }
+  item,
+  index,
+  isNew,
+  newItems,
+  setNewItems,
+  items,
+  setItems,
+  apiEndpoint,
+  setSuccessMessage,
+  setError,
+}) => {
+  try {
+    if (setError) {
+      setError("");
     }
-  };
+
+    if (!item) {
+      throw new Error("No item provided to save.");
+    }
+
+    const {
+      _id,
+      __v,
+      createdAt,
+      updatedAt,
+      isEditing,
+      isNew: localIsNew,
+      ...itemToSave
+    } = item;
+
+    const response = await fetch(isNew ? apiEndpoint : `${apiEndpoint}/${_id}`, {
+      method: isNew ? "POST" : "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(itemToSave),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to save changes.");
+    }
+
+    const savedItem = {
+      ...data,
+      isEditing: false,
+    };
+
+    if (isNew) {
+      if (!newItems || !setNewItems) {
+        throw new Error("New items state is missing.");
+      }
+
+      setItems([savedItem, ...items]);
+      setNewItems(newItems.filter((_, itemIndex) => itemIndex !== index));
+    } else {
+      const updatedItems = items.map((existingItem) =>
+        existingItem._id === _id ? savedItem : existingItem
+      );
+
+      setItems(updatedItems);
+    }
+
+    if (setSuccessMessage) {
+      setSuccessMessage("Changes saved successfully!");
+      setTimeout(() => setSuccessMessage(""), 3000);
+    }
+  } catch (err) {
+    console.error("Error saving item:", err);
+
+    if (setError) {
+      setError(err.message || "Something went wrong while saving changes.");
+    }
+  }
+};
 
 export const cancelEdit = ({
   index,
