@@ -44,7 +44,6 @@ const Expenses = () => {
       setError("");
 
       const expensesData = await fetchItems("/api/expenses");
-      console.log("Fetched Expenses Data:", expensesData);
 
       setExpenses(
         expensesData.map((expense) => ({
@@ -114,7 +113,6 @@ const Expenses = () => {
   const filteredExpenses = applyExpenseFilters(expenses, filters);
 
   const handleExpenseChange = (fieldName, value) => {
-    console.log(`Updating ${fieldName} with value: ${value}`);
     setNewExpense((prevExpense) => {
       const updatedExpense = { ...prevExpense, [fieldName]: value };
       return updatedExpense;
@@ -187,7 +185,6 @@ const Expenses = () => {
     };
 
     if (!isValidExpense(generatedExpense)) {
-      console.log(generatedExpense);
       console.error("Validation failed. Please fill all required fields.");
       setShowValidationError(true);
       return;
@@ -224,12 +221,10 @@ const Expenses = () => {
       });
 
       setShowValidationError(false);
-      setIsFormVisible(false); // Collapse the form after saving
-      console.log("Expense added and saved successfully:", savedExpense);
+      setIsFormVisible(false);
 
       // Optionally show a success message
       setSuccessMessage("Expense added and saved successfully!");
-      console.log("Success message:", successMessage);
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err) {
       console.error("Error saving expense:", err.message);

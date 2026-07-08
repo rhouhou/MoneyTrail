@@ -54,9 +54,6 @@ const Sales = () => {
         fetchItems("/api/sales"),
       ]);
 
-      console.log("Fetched Product Data:", productData);
-      console.log("Fetched Sales Data:", salesData);
-
       setProductNames(productData.map((product) => product.productname));
       setProducts(productData);
 
@@ -132,27 +129,20 @@ const Sales = () => {
 
   // Handle Change, Edit, Save, Cancel, and add functions
   const handleSaleChange = (fieldName, value) => {
-    console.log(`Updating ${fieldName} with value: ${value}`);
     setNewSale((prevSale) => {
       const updatedSale = { ...prevSale, [fieldName]: value };
-
-      console.log("Updated Sale:", updatedSale);
 
       // Update unit price if productname or isWithBottle changes
       if (fieldName === "productname" || fieldName === "isWithBottle") {
         const selectedProduct = products.find(
           (product) => product.productname === updatedSale.productname
         );
-        console.log("Selected Product:", selectedProduct);
 
         if (selectedProduct) {
           updatedSale.unitprice =
             updatedSale.isWithBottle === "yes"
               ? selectedProduct.sellPriceLLwithBottle
               : selectedProduct.sellPriceLLwithoutBottle;
-
-          // Debug: Log updated unitprice
-          console.log("Updated Unit Price:", updatedSale.unitprice);
         }
       }
 
@@ -280,7 +270,6 @@ const Sales = () => {
     };
 
     if (!isValidSale(generatedSale)) {
-      console.log(generatedSale);
       console.error("Validation failed. Please fill all required fields.");
       setShowValidationError(true);
       return;
@@ -317,12 +306,10 @@ const Sales = () => {
       });
 
       setShowValidationError(false);
-      setIsFormVisible(false); // Collapse the form after saving
-      console.log("Sale added and saved successfully:", savedSale);
+      setIsFormVisible(false);
 
       // Optionally show a success message
       setSuccessMessage("Sale added and saved successfully!");
-      console.log("Success message:", successMessage);
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err) {
       console.error("Error saving sale:", err.message);

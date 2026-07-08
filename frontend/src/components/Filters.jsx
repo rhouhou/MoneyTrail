@@ -17,7 +17,6 @@ const Filters = ({ filtersConfig, filters, setFilters, onResetFilters  }) => {
                       ...filters,
                       [filter.name]: e.target.value,
                     };
-                    console.log("Updated Filters (Select):", newFilters); // Debug Log
                     setFilters(newFilters);
                   }}
                   className="text-slate-400 px-3 py-2 border rounded-md w-46 sm:w-60 bg-white h-[38px]"
@@ -48,7 +47,6 @@ const Filters = ({ filtersConfig, filters, setFilters, onResetFilters  }) => {
                       ...filters,
                       [filter.name]: e.target.value,
                     };
-                    console.log("Updated Filters (Select):", newFilters); // Debug Log
                     setFilters(newFilters);
                   }}
                 />
@@ -68,7 +66,6 @@ const Filters = ({ filtersConfig, filters, setFilters, onResetFilters  }) => {
                       ...filters,
                       [filter.name]: e.target.value,
                     };
-                    console.log("Updated Filters (Select):", newFilters); // Debug Log
                     setFilters(newFilters);
                   }}
                   className="text-slate-400 px-3 py-2 border rounded-md w-46 sm:w-60 bg-white h-[38px]"
@@ -90,7 +87,6 @@ const Filters = ({ filtersConfig, filters, setFilters, onResetFilters  }) => {
                       ...filters,
                       [filter.name]: e.target.value,
                     };
-                    console.log("Updated Filters (Select):", newFilters); // Debug Log
                     setFilters(newFilters);
                   }}
                 />
@@ -113,7 +109,6 @@ const Filters = ({ filtersConfig, filters, setFilters, onResetFilters  }) => {
                       ...filters,
                       [filter.name]: e.target.value,
                     };
-                    console.log("Updated Filters (Select):", newFilters); // Debug Log
                     setFilters(newFilters);
                   }}
                   className="bg-transparent focus:outline-none flex-grow px-2"

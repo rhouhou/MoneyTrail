@@ -39,7 +39,6 @@ const ItemsTable = ({ columns, items, onEdit, onDelete, onSaveEdit, onCancelEdit
                     <select
                       value={item[column.accessor] || ""}
                       onChange={(e) =>{
-                        console.log(`Editing ${column.accessor}:`, e.target.value); // Debugging
                         onEdit(
                             index,
                             column.accessor,

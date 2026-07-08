@@ -67,7 +67,6 @@ const ProductList = () => {
       setError("");
 
       const productData = await fetchItems("/api/products");
-      console.log("Fetched Products Data:", productData);
 
       setProducts(
         productData.map((product) => ({
@@ -145,7 +144,6 @@ const ProductList = () => {
   const filteredProducts = applyProductFilters(products, filters);
 
   const handleProductChange = (fieldName, value) => {
-    console.log(`Updating ${fieldName} with value: ${value}`);
     setNewProduct((prevProduct) => {
       const updatedProduct = { ...prevProduct, [fieldName]: value };
       return updatedProduct;
@@ -253,7 +251,6 @@ const ProductList = () => {
     };
 
     if (!isValidProduct(generatedProduct)) {
-      console.log(generatedProduct);
       console.error("Validation failed. Please fill all required fields.");
       setShowValidationError(true);
       return;
@@ -294,12 +291,10 @@ const ProductList = () => {
       });
 
       setShowValidationError(false);
-      setIsFormVisible(false); // Collapse the form after saving
-      console.log("Product added and saved successfully:", savedProduct);
+      setIsFormVisible(false);
 
       // Optionally show a success message
       setSuccessMessage("Product added and saved successfully!");
-      console.log("Success message:", successMessage);
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err) {
       console.error("Error saving product:", err.message);
