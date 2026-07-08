@@ -268,3 +268,7 @@ The project is deployed on Render and can also be run locally with a MongoDB con
 * The app is intended as a portfolio/demo project
 * Financial summaries are basic and should be reviewed before use in real business settings
 * Environment variables must be configured before deployment
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
