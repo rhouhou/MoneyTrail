@@ -35,6 +35,14 @@ app.use("/api/sales", saleRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/accounting", accountingRoutes);
 
+app.use("/api", (req, res) => {
+  res.status(404).json({
+    success: false,
+    statusCode: 404,
+    message: "API route not found",
+  });
+});
+
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
 app.get("*", (req, res) => {
