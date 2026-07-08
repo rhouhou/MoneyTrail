@@ -21,7 +21,14 @@ mongoose
     console.log(err);
   });
 
-  const __dirname = path.resolve();
+const __dirname = path.resolve();
+
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    message: "MoneyTrail API is running",
+  });
+});
 
 app.use("/api/products", productRoutes);
 app.use("/api/sales", saleRoutes);
