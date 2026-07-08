@@ -165,20 +165,37 @@ cd ..
 Start the backend server from the root directory:
 
 ```bash
-npm run dev
+npm run dev:backend
+```
+
+The backend runs on:
+
+```text
+http://localhost:3000
 ```
 
 In a second terminal, start the frontend development server:
 
 ```bash
-cd frontend
-npm run dev
+npm run dev:frontend
 ```
 
-The frontend runs with Vite and proxies API requests to the backend at:
+The frontend runs with Vite, usually at:
+
+```text
+http://localhost:5173
+```
+
+During development, frontend API requests are proxied to the backend server at:
 
 ```text
 http://localhost:3000
+```
+
+You can also still start the backend with:
+
+```bash
+npm run dev
 ```
 
 ## Production Build
