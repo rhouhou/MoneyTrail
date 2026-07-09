@@ -7,7 +7,7 @@ import productRoutes from "./routes/product.routes.js";
 import saleRoutes from "./routes/sale.routes.js";
 import expenseRoutes from "./routes/expense.routes.js";
 import accountingRoutes from "./routes/accounting.routes.js";
-import path from 'path';
+import path from "path";
 import cors from "cors";
 
 dotenv.config();
@@ -37,7 +37,7 @@ if (process.env.NODE_ENV !== "production") {
   app.use(
     cors({
       origin: "http://localhost:5173",
-    })
+    }),
   );
 }
 
@@ -76,7 +76,7 @@ app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-})
+});
 
 // Global error handling middleware
 // Global error handling middleware

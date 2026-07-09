@@ -52,17 +52,17 @@ npm run dev
 
 Please check that:
 
-* The backend starts successfully.
-* The frontend starts successfully.
-* Products, sales, and expenses can be loaded.
-* Add, edit, and delete actions still work.
-* No private `.env` values or secrets are committed.
+- The backend starts successfully.
+- The frontend starts successfully.
+- Products, sales, and expenses can be loaded.
+- Add, edit, and delete actions still work.
+- No private `.env` values or secrets are committed.
 
 ## Code Style
 
-* Keep code readable and consistent with the existing structure.
-* Use clear commit messages.
-* Avoid committing generated folders such as `node_modules` or `frontend/dist`.
+- Keep code readable and consistent with the existing structure.
+- Use clear commit messages.
+- Avoid committing generated folders such as `node_modules` or `frontend/dist`.
 
 ## Project Scope
 

@@ -8,35 +8,35 @@ MoneyTrail is a full-stack web application for managing small-business products,
 
 ## Features
 
-* Manage product records with category, scent, color, bottle size, cost, and selling price information
-* Add, edit, delete, search, filter, and paginate product entries
-* Record business expenses with category, date, description, exchange rate, paid amount, and unit price
-* Track sales transactions with product name, business type, quantity, unit price, and total amount
-* Generate accounting-style summaries from sales and expenses
-* Responsive React frontend with reusable table, filter, dropdown, and pagination components
-* Express and MongoDB backend with REST API routes for products, expenses, and sales
+- Manage product records with category, scent, color, bottle size, cost, and selling price information
+- Add, edit, delete, search, filter, and paginate product entries
+- Record business expenses with category, date, description, exchange rate, paid amount, and unit price
+- Track sales transactions with product name, business type, quantity, unit price, and total amount
+- Generate accounting-style summaries from sales and expenses
+- Responsive React frontend with reusable table, filter, dropdown, and pagination components
+- Express and MongoDB backend with REST API routes for products, expenses, and sales
 
 ## Tech Stack
 
 ### Frontend
 
-* React
-* Vite
-* React Router
-* Tailwind CSS
-* React Icons
+- React
+- Vite
+- React Router
+- Tailwind CSS
+- React Icons
 
 ### Backend
 
-* Node.js
-* Express.js
-* MongoDB
-* Mongoose
-* dotenv
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- dotenv
 
 ### Deployment
 
-* Render
+- Render
 
 ## Project Structure
 
@@ -63,11 +63,11 @@ MoneyTrail/
 
 ## Main Pages
 
-* **Home** — Overview page for the application
-* **Products** — Product inventory management
-* **Sales** — Sales transaction tracking
-* **Expenses** — Business expense tracking
-* **Accounting** — Financial summary view based on sales and expenses
+- **Home** — Overview page for the application
+- **Products** — Product inventory management
+- **Sales** — Sales transaction tracking
+- **Expenses** — Business expense tracking
+- **Accounting** — Financial summary view based on sales and expenses
 
 ## API Routes
 
@@ -120,9 +120,9 @@ Returns a basic accounting summary, including total sales, total expenses, numbe
 
 Make sure you have installed:
 
-* Node.js
-* npm
-* MongoDB Atlas account or local MongoDB database
+- Node.js
+- npm
+- MongoDB Atlas account or local MongoDB database
 
 ## Environment Variables
 
@@ -252,22 +252,22 @@ The project is deployed on Render and can also be run locally with a MongoDB con
 
 ## Planned Improvements
 
-* Add user authentication and protected routes
-* Add role-based access for business/admin users
-* Add automated backend tests for API routes
-* Improve accounting summaries with date filters
-* Add charts for sales, expenses, and profit trends
-* Add export options for accounting reports
-* Improve responsive design for smaller screens
-* Clean and standardize field names across models and frontend forms
-* Add demo screenshots and sample data
+- Add user authentication and protected routes
+- Add role-based access for business/admin users
+- Add automated backend tests for API routes
+- Improve accounting summaries with date filters
+- Add charts for sales, expenses, and profit trends
+- Add export options for accounting reports
+- Improve responsive design for smaller screens
+- Clean and standardize field names across models and frontend forms
+- Add demo screenshots and sample data
 
 ## Known Limitations
 
-* Authentication and user roles are not currently implemented
-* The app is intended as a portfolio/demo project
-* Financial summaries are basic and should be reviewed before use in real business settings
-* Environment variables must be configured before deployment
+- Authentication and user roles are not currently implemented
+- The app is intended as a portfolio/demo project
+- Financial summaries are basic and should be reviewed before use in real business settings
+- Environment variables must be configured before deployment
 
 ## License
 
